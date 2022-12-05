@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -eou pipefail
+
+pushd src
+touch "Day$1.kt" "Day$1.txt" "Day$1_test.txt"
+popd
