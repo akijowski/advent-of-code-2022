@@ -2,6 +2,10 @@ import java.util.*
 import kotlin.collections.ArrayDeque
 
 fun main() {
+
+    fun List<String>.firstBlankIndex(): Int
+        = this.indexOfFirst { it.isBlank() }
+
     fun toStacks(input: List<String>, splitIdx: Int): List<Stack<Char>> {
         //for i in row, if row[i] == num; for j in start-1 downTo 0, if input[j][i] == char; stack.push(char)
         val stacks = mutableListOf<Stack<Char>>()
@@ -47,7 +51,7 @@ fun main() {
     }
 
     fun part1Test(input: List<String>): String {
-        val splitIdx = input.indexOfFirst { it.isBlank() }
+        val splitIdx = input.firstBlankIndex()
         val t = toStacks(input, splitIdx)
         val instructions = input.drop(splitIdx + 1).map {
             toInstructions(it)
@@ -58,7 +62,7 @@ fun main() {
     }
 
     fun part1(input: List<String>): String {
-        val splitIdx = input.indexOfFirst { it.isBlank() }
+        val splitIdx = input.firstBlankIndex()
         val s = toStacks(input, splitIdx)
         input.drop(splitIdx + 1).map {
             toInstructions(it)
@@ -67,7 +71,7 @@ fun main() {
     }
 
     fun part2Test(input: List<String>): String {
-        val splitIdx = input.indexOfFirst { it.isBlank() }
+        val splitIdx = input.firstBlankIndex()
         val t = toStacks(input, splitIdx)
         val instructions = input.drop(splitIdx + 1).map {
             toInstructions(it)
@@ -78,7 +82,7 @@ fun main() {
     }
 
     fun part2(input: List<String>): String {
-        val splitIdx = input.indexOfFirst { it.isBlank() }
+        val splitIdx = input.firstBlankIndex()
         val s = toStacks(input, splitIdx)
         val instructions = input.drop(splitIdx + 1).map {
             toInstructions(it)
