@@ -3,21 +3,21 @@ import java.util.*
 fun main() {
     fun sorted(input: List<String>): SortedSet<Int> {
         var sum = 0
-        val ts = TreeSet(Comparator.naturalOrder<Int>().reversed()).apply {
+        return TreeSet(Comparator.naturalOrder<Int>().reversed()).apply {
             input.map {
                 if (it.isBlank()) {
-                    this.add(sum)
+                    add(sum)
                     sum = 0
                 } else {
                     sum += it.toInt()
                 }
             }
             if (sum != 0) {
-                this.add(sum)
+                add(sum)
             }
         }
-        return ts
     }
+
     fun part1(input: List<String>): Int {
         val ts = sorted(input)
 //        println(ts.joinToString())
