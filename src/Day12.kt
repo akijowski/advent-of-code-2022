@@ -50,8 +50,8 @@ fun main() {
                 }
             }
         }
-        val g = Dijkstra(adjList, start!!)
-        return g.run(end!!)
+        val b = BFSGraphSearch(adjList, start!!)
+        return b.run(end!!)
     }
 
     fun part2(input: List<String>): Int {

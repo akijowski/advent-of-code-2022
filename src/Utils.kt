@@ -46,9 +46,8 @@ class Dijkstra(
             val nodeDist = nodeDistances[node]!!
             if (node !in visited) {
                 // take the smallest
-                if (currDist < nodeDist) {
-                    nodeDistances[node] = currDist
-                }
+                nodeDistances[node] = currDist.coerceAtMost(nodeDist)
+
             }
         }
         visited += curr
@@ -75,5 +74,42 @@ class Dijkstra(
             visit(curr)
         }
         return nodeDistances.filterKeys { it in ends }
+    }
+}
+
+/**
+ * Performs a BFS search for a given graph (adjacency list) and start node
+ */
+class BFSGraphSearch(
+    private val graph: Map<GraphNode, List<GraphNode>>,
+    private val start: GraphNode
+) {
+
+    /**
+     * Find the number of steps from start until end
+     */
+    fun run(end: GraphNode): Int {
+        val visited = mutableSetOf<GraphNode>().apply { add(start) }
+        val q = ArrayDeque<GraphNode>().apply { addFirst(start) }
+        val steps = graph.keys.associateWith { Int.MAX_VALUE - 1 }.toMutableMap()
+        var count = 0
+        while (q.isNotEmpty()) {
+            val size = q.size
+            for (n in 0 until size) {
+                val node = q.removeFirst()
+                steps[node]?.let { dist -> steps[node] = dist.coerceAtMost(count) }
+                if (node == end) {
+                    break
+                }
+                graph[node]?.forEach { neighbor ->
+                    if (neighbor !in visited) {
+                        visited.add(neighbor)
+                        q.addLast(neighbor)
+                    }
+                } ?: throw IllegalArgumentException("unable to find neighbors for $node")
+            }
+            count++
+        }
+        return steps[end]!!
     }
 }
